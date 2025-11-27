@@ -3,7 +3,6 @@ const COOKIE_KEY = `advent_opened_${YEAR}`;
 
 const grid = document.getElementById('grid');
 const modalRoot = document.getElementById('modalRoot');
-const resetBtn = document.getElementById('resetBtn');
 const audioToggle = document.getElementById('audioToggle');
 const dayMessages = {
   1: "🎄 ¡Empieza nuestro primer calendario de Adviento juntos mosii!, que comienza la magia navideña.🎄",
@@ -177,13 +176,7 @@ function showModal(day,message,special){
 }
 
 // Reset calendario
-resetBtn.addEventListener('click', ()=>{
-  if(confirm('¿Borrar progreso del calendario?')){
-    opened = {}; 
-    setCookie(COOKIE_KEY, JSON.stringify({}), cookieExpiry());
-    render();
-  }
-});
+
 
 // Nieve
 function makeSnow(){
