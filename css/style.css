@@ -1,0 +1,148 @@
+:root{
+  --bg-red: #b21f1f;
+  --panel: #f7eee6;
+  --red: #a92b2b;
+  --gold: #d9b44a;
+  --muted: #c9c1b3;
+  --snow-color: #fff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body, html {
+  height: 100%;
+  font-family: 'Georgia', serif;
+  background-color: var(--bg-red);
+  /* Patrón de muchas cajitas tipo calendario */
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0,0,0,0.1) 40px, rgba(0,0,0,0.1) 41px),
+                    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,0.1) 40px, rgba(0,0,0,0.1) 41px);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:20px;
+  overflow-x:hidden;
+  position:relative;
+}
+
+.scene {
+  width: 90%;          /* ocupa casi toda la pantalla en móvil */
+  max-width: 350px;    /* limita ancho en móviles */
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  background: rgba(11,27,43,0.85);
+}
+
+/* Para pantallas medianas y grandes (PC) */
+@media screen and (min-width: 768px) {
+  .scene {
+    width: 100%;        /* ocupar ancho completo disponible */
+    max-width: 1000px;  /* ancho máximo en PC */
+  }
+}
+
+.header{text-align:center;margin-bottom:20px;}
+.header h1{font-size:2.5rem;color:var(--gold);text-shadow:0 2px 6px rgba(0,0,0,0.7);}
+.header p.lead{color:var(--muted);margin-top:6px;}
+.controls{margin-top:10px;}
+.controls button{margin:0 5px;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;background:var(--red);color:white;font-weight:bold;}
+
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;}
+.tile{position:relative;background:var(--panel);border-radius:12px;padding:14px;min-height:100px;display:flex;justify-content:center;align-items:center;cursor:pointer;box-shadow:0 6px 12px rgba(0,0,0,0.4);transition:transform 0.2s, box-shadow 0.3s;}
+.tile:hover{transform:translateY(-4px);box-shadow:0 10px 18px rgba(0,0,0,0.6);}
+.tile.locked{filter:grayscale(.3);opacity:.8;cursor:not-allowed;}
+.tile.weekly{border:2px solid var(--gold);}
+.num{font-size:1.8rem;font-weight:bold;color:var(--red);}
+.opened-badge{position:absolute;top:8px;left:8px;background:var(--gold);color:var(--panel);padding:4px 6px;border-radius:6px;font-size:12px;font-weight:700;}
+.padlock{position:absolute;top:8px;right:8px;font-size:18px;color:rgba(0,0,0,0.3);}
+
+.tree {
+  width: 500px; /* ajusta según lo grande que quieras */
+  height: auto;
+  position: absolute;
+  bottom: 20px;  /* distancia desde la parte inferior de .scene */
+  left: 20px;    /* esquina inferior izquierda */
+  /* Si quieres esquina inferior derecha, usa right:20px; left:auto; */
+  transform: none; /* ya no necesitamos centrar con translateX */
+  background-image: url('../img/arbol.png'); /* tu imagen local */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  pointer-events: none;
+  z-index: 5; /* debajo de modal y nieve, encima del fondo */
+}
+
+/* modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;}
+.modal{background:linear-gradient(#fff8f0,#f6eee3);padding:20px;border-radius:12px;max-width:500px;text-align:center;box-shadow:0 10px 50px rgba(0,0,0,0.7);}
+.modal h2{margin-bottom:12px;color:#3b2b20;}
+.modal .content{color:#2b1f15;font-size:1rem;}
+.modal .close{margin-top:14px;padding:8px 12px;background:var(--red);color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer;}
+
+/* nieve global */
+.snow{position:fixed;inset:0;pointer-events:none;z-index:1000;}
+.flake{position:absolute;color:var(--snow-color);opacity:0.8;font-size:12px;animation-name:fall;animation-timing-function:linear;animation-iteration-count:infinite;}
+@keyframes fall{to{transform:translateY(120vh) rotate(360deg);}}
+
+
+body, html {
+  height: 100%;
+  font-family: 'Mountains of Christmas', cursive;
+  background-color: var(--bg-dark);
+  background-image: url('../img/patron.png'); /* tu imagen tileable */
+  background-repeat: repeat; /* repetir horizontal y vertical */
+  background-size: 150px 150px; /* <-- ajusta este tamaño a lo pequeño que quieras */
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+
+.header h1,
+.tile .num,
+.controls button {
+  font-family: 'Mountains of Christmas', cursive;
+}
+
+/* Animación de abrir casilla */
+@keyframes tileOpen {
+  0% { transform: scale(0.7); box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+  50% { transform: scale(1.2); box-shadow: 0 12px 20px rgba(0,0,0,0.5); }
+  100% { transform: scale(1); box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+}
+
+/* Clase que se aplica cuando se abre */
+.tile.opened {
+  background-color: #ddd; /* color más apagado */
+  color: #888; /* número más apagado */
+  cursor: default;
+  filter: grayscale(0.3);
+}
+/* Animación chula para abrir casilla */
+@keyframes tileOpen {
+  0% { 
+    transform: scale(0.7) rotate(-10deg); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.3) rotate(10deg); 
+    box-shadow: 0 16px 25px rgba(0,0,0,0.6);
+    filter: brightness(1.5);
+  }
+  70% { 
+    transform: scale(1.1) rotate(-5deg); 
+    box-shadow: 0 10px 18px rgba(0,0,0,0.5);
+    filter: brightness(1.2);
+  }
+  100% { 
+    transform: scale(1) rotate(0deg); 
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    filter: brightness(1);
+  }
+}

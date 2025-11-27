@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario de Adviento Nevado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="tree"></div>
+  <div class="scene" id="scene">
+    <div class="header">
+      <h1>Calendario de Adviento</h1>
+      <p class="lead">Regalo para mi mosi mosi</p>
+      <div class="controls">
+        <button id="audioToggle">🔔 Música: activada</button>
+        <button id="resetBtn">Resetear progreso</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid" role="grid" aria-label="Casillas del calendario"></div>
+
+    <!-- Modal -->
+    <div id="modalRoot" aria-hidden="true"></div>
+
+    <!-- Nieve -->
+    <div class="snow" id="snow" aria-hidden="true"></div>
+  </div>
+
+
+  <script src="scripts/scripts.js"></script>
+</body>
+</html>
+
